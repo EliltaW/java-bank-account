@@ -60,7 +60,7 @@ public class BankAccountTest {
     @Test
     void withdrawShouldThrowExceptionForInsufficientBalance() {
 
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> account.withdraw(1200));
+        InsufficientFundsException exception = assertThrows(InsufficientFundsException.class, () -> account.withdraw(1200));
         assertEquals("insufficient funds", exception.getMessage());
     }
 

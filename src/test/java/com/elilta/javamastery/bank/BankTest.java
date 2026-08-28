@@ -30,7 +30,7 @@ public class BankTest {
         BankAccount account = bank.createAccount("123", "Jessica", 1000);
         //BankAccount duplicateAccount = bank.createAccount("123", "Lozz", 200);
 
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> bank.createAccount("123", "Lozz", 200));
+        DuplicateAccountNumberException exception = assertThrows(DuplicateAccountNumberException.class, () -> bank.createAccount("123", "Lozz", 200));
 
         assertEquals(1000.0, account.getAccountBalance(), 0.001);
         assertEquals(account, bank.findAccount("123"));
@@ -45,7 +45,7 @@ public class BankTest {
 
     @Test
     void findAccountShouldThrowExceptionForNonExistingAccountNumber() {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> bank.findAccount("123"));
+        AccountNotFoundException exception = assertThrows(AccountNotFoundException.class, () -> bank.findAccount("123"));
         assertEquals("Account not found", exception.getMessage());
     }
 
@@ -65,7 +65,7 @@ public class BankTest {
 
         BankAccount sourceAccount = bank.createAccount("12345", "JAne", 10000);
 
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> bank.transfer("12345", "1230", 500));
+        AccountNotFoundException exception = assertThrows(AccountNotFoundException.class, () -> bank.transfer("12345", "1230", 500));
         assertEquals(10000.0, sourceAccount.getAccountBalance(), 0.001);
         assertEquals("Account not found", exception.getMessage());
 

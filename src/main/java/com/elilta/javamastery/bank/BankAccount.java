@@ -53,7 +53,7 @@ public class BankAccount {
             throw new IllegalArgumentException("withdrawAmount must be greater than 0");
         }
         if ( withdrawAmount >  accountBalance){
-            throw new IllegalArgumentException("insufficient funds");
+            throw new InsufficientFundsException("insufficient funds");
         }
         else accountBalance -= withdrawAmount;
 

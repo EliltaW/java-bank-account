@@ -12,7 +12,7 @@ public class Bank {
     public BankAccount createAccount(String accountNumber, String accountHolderName, double initialBalance) {
 
         if (accounts.containsKey(accountNumber)) {
-            throw new IllegalArgumentException("account number already exists");
+            throw new DuplicateAccountNumberException("account number already exists");
         }
 
         BankAccount account = new BankAccount(accountNumber, accountHolderName, initialBalance);
@@ -26,7 +26,7 @@ public class Bank {
         BankAccount account = accounts.get(accountNumber);
 
         if (account == null) {
-            throw new IllegalArgumentException("Account not found");
+            throw new AccountNotFoundException("Account not found");
         }
         return account;
     }
