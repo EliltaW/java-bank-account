@@ -67,7 +67,7 @@ public class BankAccountTest {
     @Test
     void transferShouldThrowExceptionWhenFundsAreInsufficient() {
 
-        assertThrows(IllegalArgumentException.class, () -> sourceAccount.transfer(destinationAccount, 2000));
+        assertThrows(InsufficientFundsException.class, () -> sourceAccount.transfer(destinationAccount, 2000));
         assertEquals(1000, sourceAccount.getAccountBalance());
         assertEquals(500, destinationAccount.getAccountBalance());
 
