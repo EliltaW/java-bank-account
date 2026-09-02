@@ -4,8 +4,7 @@ package com.elilta.javamastery.bank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BankAccountTest {
 
@@ -22,6 +21,41 @@ public class BankAccountTest {
         sourceAccount = new BankAccount("3546", "Anna", 1000);
         destinationAccount = new BankAccount("3567546", "alexa", 500);
         logicalDestinationAccount = new BankAccount("3546", "Liam", 200);
+    }
+
+    @Test
+    void constructorShouldThrowExceptionForNullAccountNumber() {
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new BankAccount(null, "Alice", 100));
+        assertEquals("accountNumber can not be empty", exception.getMessage());
+    }
+
+    @Test
+    void constructorShouldThrowExceptionForBlankAccountNumber() {
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new BankAccount(" ", "Alice", 100));
+        assertEquals("accountNumber can not be empty", exception.getMessage());
+    }
+
+    @Test
+    void constructorShouldThrowExceptionForNullAccountHolder() {
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new BankAccount("123", null, 100));
+        assertEquals("accountHolder can not be empty", exception.getMessage());
+    }
+
+    @Test
+    void constructorShouldThrowExceptionForBlankAccountHolder() {
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new BankAccount("123", "", 100));
+        assertEquals("accountHolder can not be empty", exception.getMessage());
+    }
+
+    @Test
+    void constructorShouldThrowExceptionForNegativeInitialBalance() {
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new BankAccount("123", "Alice", -100));
+        assertEquals("initialBalance can not be negative", exception.getMessage());
     }
 
     @Test
@@ -103,9 +137,41 @@ public class BankAccountTest {
 
     @Test
     void transferShouldThrowExceptionForInvalidAmount() {
-       assertThrows(IllegalArgumentException.class, () -> sourceAccount.transfer(destinationAccount, -200));
-        assertEquals(1000,sourceAccount.getAccountBalance());
-        assertEquals(500,destinationAccount.getAccountBalance());
+        assertThrows(IllegalArgumentException.class, () -> sourceAccount.transfer(destinationAccount, -200));
+        assertEquals(1000, sourceAccount.getAccountBalance());
+        assertEquals(500, destinationAccount.getAccountBalance());
     }
 
+    @Test
+    void equalsShouldReturnTrueForForAccountsWithSameAccountNumber() {
+        assertEquals(sourceAccount, logicalDestinationAccount);
+    }
+
+    @Test
+    void equalsShouldReturnTrueForForSameAccounts() {
+        assertTrue(sourceAccount.equals(sourceAccount));
+    }
+
+
+    @Test
+    void equalsShouldReturnFalseForAccountsWithDifferentAccountNumber() {
+        assertNotEquals(sourceAccount, destinationAccount);
+    }
+
+    @Test
+    void equalsShouldReturnFalseForForNullAccount() {
+
+        assertNotEquals(sourceAccount, null);
+    }
+
+    @Test
+    void equalsShouldReturnFalseForNonBankAccountType() {
+
+        assertNotEquals(sourceAccount, "123");
+    }
+
+    @Test
+    void hashcodeShouldReturnSameValueForEqualAccounts(){
+        assertEquals(sourceAccount.hashCode(), logicalDestinationAccount.hashCode());
+    }
 }
