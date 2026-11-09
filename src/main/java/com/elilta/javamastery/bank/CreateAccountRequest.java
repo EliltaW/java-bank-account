@@ -1,9 +1,15 @@
 package com.elilta.javamastery.bank;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
+
 public class CreateAccountRequest {
 
+    @NotBlank
     private String accountNumber;
+    @NotBlank
     private String accountHolderName;
+    @PositiveOrZero
     private double initialBalance;
 
     public String getAccountNumber() {

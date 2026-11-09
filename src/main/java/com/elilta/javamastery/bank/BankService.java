@@ -40,4 +40,14 @@ public class BankService {
 
     }
 
+    public void transfer(String fromAccount, String toAccount, double amount) {
+
+        BankAccount source = getAccount(fromAccount);
+        BankAccount destination = getAccount(toAccount);
+
+        source.transfer(destination, amount);
+    }
+
+
+
 }
